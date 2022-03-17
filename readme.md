@@ -33,6 +33,20 @@ read -p "admin user's password/secret key: " MINIO_SECRET_KEY
 export MINIO_ACCESS_KEY MINIO_SECRET_KEY
 ```
 
+### publicly readable buckets
+
+**We use one bucket for each organisation that we provide/host data for.**
+
+By default, a bucket newly created via the Web UI is private, meaning that only authenticated clients can read its content. To make it readable for everyone, you need to
+- either run `mc anonymous set download <alias>/<bucket>` manually after creating it, or
+- use the [`create-minio-public-bucket.sh` script](create-minio-public-bucket.sh), which creates a bucket and allows anonymous downloads.
+
+Configure access to the MinIO instance (see above) and run the script:
+
+```shell
+./create-minio-public-bucket.sh my-new-bucket
+```
+
 ### service account for automated publishing
 
 From several data sources' continuous deployment runs, we **publish data onto `opendata.bbnavi.de` in an automated way, using a service account**. This section explains how to set up such a service account *once* on a new MinIO instance.
